@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import SplitType from "split-type";
 import IPhoneX from "../components/IPhoneX";
-import { gsapOptions, gsapOptionsType } from "./gsapOptions";
+import { gsapOptions } from "./gsapOptions";
 import GsapSlider from "../components/Sliders";
 import { useDebounce } from "@toss/react";
 import { Button } from "@mui/joy";
@@ -45,8 +45,8 @@ export default function Text() {
             opacity: gsapStates.opacityFrom,
           },
           {
-            x: 0,
-            y: 0,
+            x: gsapOptions.find((item) => item.type === "xTo")?.default,
+            y: gsapOptions.find((item) => item.type === "yTo")?.default,
             opacity: gsapStates.opacityTo,
             stagger: 0.1,
             duration: 0.5,
@@ -82,15 +82,16 @@ export default function Text() {
         <Button onClick={() => setCounter(counter + 1)}>refresh</Button>
         <div style={{ height: 10 }} />
         {gsapOptions.map((item) => {
-          return (
-            <GsapSlider
-              key={item.type}
-              type={item.type}
-              set={onChangeSlider(item.type)}
-              val={gsapStates}
-              target={item}
-            />
-          );
+          if (item.componentType === "slider")
+            return (
+              <GsapSlider
+                key={item.type}
+                type={item.type}
+                set={onChangeSlider(item.type)}
+                val={gsapStates}
+                target={item}
+              />
+            );
         })}
       </div>
       <IPhoneX>
