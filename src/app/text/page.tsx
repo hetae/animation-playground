@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import SplitType from "split-type";
 import styled from "@emotion/styled";
 import { Button, Divider } from "@mui/joy";
-import { useDebounce, useIsMounted } from "@toss/react";
+import { useDebounce } from "@toss/react";
 import IPhoneX from "../components/IPhoneX";
 import { TextType, gsapOptions } from "./gsapOptions";
 import GsapSlider from "./GsapSlider";
@@ -17,7 +17,7 @@ export default function Text() {
   const [isCode, setIsCode] = useState(false);
   const iPhoneTextRef = useRef<HTMLDivElement>(null);
   const iPhoneCodeRef = useRef<HTMLDivElement>(null);
-  const isMounted = useIsMounted();
+  const isMountRef = useRef(false);
   const [gsapStates, setGsapStates] = useState(
     gsapOptions.reduce((acc, cur) => {
       acc[cur.type] = cur.default;
@@ -39,18 +39,27 @@ export default function Text() {
   useEffect(() => {
     const textPart = iPhoneTextRef.current;
     const codePart = iPhoneCodeRef.current;
-    if (!isMounted) {
-      gsap.set(codePart, { x: "375px" });
-    } else if (isCode) {
+    if (!isMountRef.current) {
+      isMountRef.current = true;
+      gsap.set(codePart, {
+        rotateY: "-90deg",
+        x: "375px",
+        opacity: 1,
+      });
+      gsap.set(textPart, { opacity: 1 });
+      return;
+    }
+
+    if (isCode) {
       gsap.to(textPart, {
-        rotateY: "45deg",
+        rotateY: "90deg",
         x: "-375px",
         duration: 1,
       });
       gsap.fromTo(
         codePart,
         {
-          rotateY: "-45deg",
+          rotateY: "-90deg",
           x: "375px",
           duration: 0,
         },
@@ -62,14 +71,14 @@ export default function Text() {
       );
     } else {
       gsap.to(codePart, {
-        rotateY: "-45deg",
+        rotateY: "-90deg",
         x: "375px",
         duration: 1,
       });
       gsap.fromTo(
         textPart,
         {
-          rotateY: "45deg",
+          rotateY: "90deg",
           x: "-375px",
           duration: 0,
         },
@@ -80,7 +89,7 @@ export default function Text() {
         }
       );
     }
-  }, [isCode, isMounted]);
+  }, [isCode]);
 
   useEffect(() => {
     const text = new SplitType("div.gsap--text");
@@ -148,9 +157,8 @@ export default function Text() {
       </OptionsContainer>
       <IPhoneX>
         <TextAndCode
-          isCode={isCode}
           setIsCode={setIsCode}
-          gsapOptions={gsapStates}
+          gsapStates={gsapStates}
           textRef={iPhoneTextRef}
           codeRef={iPhoneCodeRef}
         />
