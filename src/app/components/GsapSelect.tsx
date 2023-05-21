@@ -1,5 +1,5 @@
 import { Select, Typography, Option } from "@mui/joy";
-import { gsapOptionsTypeObj } from "../text/gsapOptions";
+import { gsapOptionsTypeObj } from "../types/gsapOption";
 
 export default function GsapSelect({
   item,

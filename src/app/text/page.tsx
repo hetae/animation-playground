@@ -6,10 +6,11 @@ import styled from "@emotion/styled";
 import { Button, Divider } from "@mui/joy";
 import { useDebounce } from "@toss/react";
 import IPhoneX from "../components/IPhoneX";
-import { TextType, gsapOptions } from "./gsapOptions";
+import { gsapOptions } from "./gsapOptions";
 import GsapSlider from "../components/GsapSlider";
 import TextAndCode from "./TextAndCode";
 import GsapSelect from "../components/GsapSelect";
+import { TextType } from "../types/gsapOption";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);

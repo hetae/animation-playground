@@ -1,47 +1,4 @@
-export type gsapOptionsType =
-  | "xFrom"
-  | "xTo"
-  | "yFrom"
-  | "yTo"
-  | "opacityFrom"
-  | "opacityTo"
-  | "duration"
-  | "easingType";
-
-export type gsapOptionsTypeObj = {
-  type: gsapOptionsType;
-  min?: number;
-  max?: number;
-  componentType?: "slider" | "input" | "select" | "none";
-  step?: number;
-  default: number | EasingType;
-  options?: string[];
-};
-
-export type EasingType =
-  | "power0"
-  | "power1"
-  | "power2"
-  | "power3"
-  | "power4"
-  | "back"
-  | "elastic"
-  | "bounce"
-  | "rough"
-  | "expo";
-
-export const easingOptions = [
-  "power0",
-  "power1",
-  "power2",
-  "power3",
-  "power4",
-  "back",
-  "elastic",
-  "bounce",
-  "rough",
-  "expo",
-];
+import { easingOptions, gsapOptionsTypeObj } from "../types/gsapOption";
 
 export const gsapOptions: gsapOptionsTypeObj[] = [
   {
@@ -72,6 +29,54 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     min: -100,
     max: 100,
     componentType: "none",
+    default: 0,
+  },
+  {
+    type: "rotateFrom",
+    min: -360,
+    max: 360,
+    componentType: "slider",
+    step: 1,
+    default: 0,
+  },
+  {
+    type: "rotateTo",
+    min: -360,
+    max: 360,
+    componentType: "slider",
+    step: 1,
+    default: 0,
+  },
+  {
+    type: "rotateXFrom",
+    min: -360,
+    max: 360,
+    componentType: "slider",
+    step: 1,
+    default: 0,
+  },
+  {
+    type: "rotateXTo",
+    min: -360,
+    max: 360,
+    componentType: "slider",
+    step: 1,
+    default: 0,
+  },
+  {
+    type: "rotateYFrom",
+    min: -360,
+    max: 360,
+    componentType: "slider",
+    step: 1,
+    default: 0,
+  },
+  {
+    type: "rotateYTo",
+    min: -360,
+    max: 360,
+    componentType: "slider",
+    step: 1,
     default: 0,
   },
   {

@@ -3,12 +3,12 @@ import styled from "@emotion/styled";
 import { gsap } from "gsap";
 import { Button, Divider } from "@mui/joy";
 import { useEffect, useRef, useState } from "react";
+import { useDebounce } from "@toss/react";
 import { gsapOptions } from "./gsapOptions";
 import GsapSelect from "../components/GsapSelect";
 import GsapSlider from "../components/GsapSlider";
 import IPhoneX from "../components/IPhoneX";
 import BlockAndCode from "./BlockAndCode";
-import { useDebounce } from "@toss/react";
 
 export default function Block() {
   const [counter, setCounter] = useState(0);
@@ -97,11 +97,17 @@ export default function Block() {
           {
             x: gsapStates.xFrom,
             y: gsapStates.yFrom,
+            rotate: gsapStates.rotateFrom,
+            rotateX: gsapStates.rotateXFrom,
+            rotateY: gsapStates.rotateYFrom,
             opacity: gsapStates.opacityFrom,
           },
           {
             x: gsapStates.xTo,
             y: gsapStates.yTo,
+            rotate: gsapStates.rotateTo,
+            rotateX: gsapStates.rotateXTo,
+            rotateY: gsapStates.rotateYTo,
             opacity: gsapStates.opacityTo,
             stagger: gsapStates.stagger,
             duration: gsapStates.duration,
