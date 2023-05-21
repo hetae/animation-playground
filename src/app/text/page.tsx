@@ -2,18 +2,14 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import SplitType from "split-type";
-import IPhoneX from "../components/IPhoneX";
-import {
-  EasingType,
-  TextType,
-  easingOptions,
-  gsapOptions,
-} from "./gsapOptions";
-import GsapSlider from "../components/Sliders";
-import { useDebounce } from "@toss/react";
-import { Button, Select, Option, Typography } from "@mui/joy";
 import styled from "@emotion/styled";
+import { Button, Divider } from "@mui/joy";
+import { useDebounce } from "@toss/react";
+import IPhoneX from "../components/IPhoneX";
+import { TextType, gsapOptions } from "./gsapOptions";
+import GsapSlider from "./GsapSlider";
 import TextAndCode from "./TextAndCode";
+import GsapSelect from "./GsapSelect";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);
@@ -78,25 +74,16 @@ export default function Text() {
         {gsapOptions.map((item) => {
           if (item.componentType === "select") {
             return (
-              <ButtonWithText key={item.type}>
-                <Typography level="body1">{item.type}: </Typography>
-                <Select
-                  defaultValue={item.default}
-                  onChange={(_e, val: any) =>
-                    val && setGsapStates({ ...gsapStates, [item.type]: val })
-                  }
-                >
-                  {item.options?.map((item) => (
-                    <Option key={item} value={item}>
-                      {item}
-                    </Option>
-                  ))}
-                </Select>
-              </ButtonWithText>
+              <GsapSelect
+                key={item.type}
+                item={item}
+                gsapStates={gsapStates}
+                setGsapStates={setGsapStates}
+              />
             );
           }
         })}
-        <div style={{ height: 10 }} />
+        <Divider />
         {gsapOptions.map((item) => {
           if (item.componentType === "slider")
             return (
@@ -133,12 +120,5 @@ const OptionsContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 1rem;
-`;
-
-const ButtonWithText = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 1rem;
 `;

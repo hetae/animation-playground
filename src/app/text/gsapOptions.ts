@@ -97,9 +97,9 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
   {
     type: "stagger",
     min: 0,
-    max: 1,
+    max: 0.3,
     componentType: "slider",
-    step: 0.1,
+    step: 0.01,
     default: 0.1,
   },
   {

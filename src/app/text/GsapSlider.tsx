@@ -1,5 +1,5 @@
 import { Slider, Typography } from "@mui/joy";
-import { gsapOptionsTypeObj } from "../text/gsapOptions";
+import { gsapOptionsTypeObj } from "./gsapOptions";
 
 export default function GsapSlider({
   type,
