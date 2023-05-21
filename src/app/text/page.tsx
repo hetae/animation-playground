@@ -11,6 +11,8 @@ import GsapSlider from "../components/GsapSlider";
 import TextAndCode from "./TextAndCode";
 import GsapSelect from "../components/GsapSelect";
 import { TextType } from "../types/gsapOption";
+import { getGsapFrom, getGsapTo } from "../utils/getGsapData";
+import useTransitionToCode from "../hooks/useTransitionToCode";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);
@@ -18,7 +20,6 @@ export default function Text() {
   const [isCode, setIsCode] = useState(false);
   const iPhoneTextRef = useRef<HTMLDivElement>(null);
   const iPhoneCodeRef = useRef<HTMLDivElement>(null);
-  const isMountRef = useRef(false);
   const [gsapStates, setGsapStates] = useState(
     gsapOptions.reduce((acc, cur) => {
       acc[cur.type] = cur.default;
@@ -26,6 +27,12 @@ export default function Text() {
       //! FIXME
     }, {} as any)
   );
+
+  useTransitionToCode({
+    isCode,
+    mainRef: iPhoneTextRef,
+    codeRef: iPhoneCodeRef,
+  });
 
   const onChangeSlider =
     (type: string) => (_event: Event, newValue: number | number[]) => {
@@ -36,61 +43,6 @@ export default function Text() {
   const handleGsapAnimation = useDebounce((timeline) => {
     timeline.play();
   }, 300);
-
-  useEffect(() => {
-    const textPart = iPhoneTextRef.current;
-    const codePart = iPhoneCodeRef.current;
-    if (!isMountRef.current) {
-      isMountRef.current = true;
-      gsap.set(codePart, {
-        rotateY: "-90deg",
-        x: "375px",
-        opacity: 1,
-      });
-      gsap.set(textPart, { opacity: 1 });
-      return;
-    }
-
-    if (isCode) {
-      gsap.to(textPart, {
-        rotateY: "90deg",
-        x: "-375px",
-        duration: 1,
-      });
-      gsap.fromTo(
-        codePart,
-        {
-          rotateY: "-90deg",
-          x: "375px",
-          duration: 0,
-        },
-        {
-          rotateY: "0deg",
-          x: "0",
-          duration: 1,
-        }
-      );
-    } else {
-      gsap.to(codePart, {
-        rotateY: "-90deg",
-        x: "375px",
-        duration: 1,
-      });
-      gsap.fromTo(
-        textPart,
-        {
-          rotateY: "90deg",
-          x: "-375px",
-          duration: 0,
-        },
-        {
-          rotateY: "0deg",
-          x: "0",
-          duration: 1,
-        }
-      );
-    }
-  }, [isCode]);
 
   useEffect(() => {
     const text = new SplitType("div.gsap--text");
@@ -104,14 +56,10 @@ export default function Text() {
         const timeline = gsap.fromTo(
           textRef.current,
           {
-            x: gsapStates.xFrom,
-            y: gsapStates.yFrom,
-            opacity: gsapStates.opacityFrom,
+            ...getGsapFrom(gsapStates),
           },
           {
-            x: gsapStates.xTo,
-            y: gsapStates.yTo,
-            opacity: gsapStates.opacityTo,
+            ...getGsapTo(gsapStates),
             stagger: gsapStates.stagger,
             duration: gsapStates.duration,
             ease: gsapStates.easingType,

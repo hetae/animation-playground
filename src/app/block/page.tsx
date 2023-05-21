@@ -9,13 +9,14 @@ import GsapSelect from "../components/GsapSelect";
 import GsapSlider from "../components/GsapSlider";
 import IPhoneX from "../components/IPhoneX";
 import BlockAndCode from "./BlockAndCode";
+import { getGsapFrom, getGsapTo } from "../utils/getGsapData";
+import useTransitionToCode from "../hooks/useTransitionToCode";
 
 export default function Block() {
   const [counter, setCounter] = useState(0);
   const [isCode, setIsCode] = useState(false);
   const iPhoneBlockRef = useRef<HTMLDivElement>(null);
   const iPhoneCodeRef = useRef<HTMLDivElement>(null);
-  const isMountRef = useRef(false);
   const [gsapStates, setGsapStates] = useState(
     gsapOptions.reduce((acc, cur) => {
       acc[cur.type] = cur.default;
@@ -23,6 +24,12 @@ export default function Block() {
       //! FIXME
     }, {} as any)
   );
+
+  useTransitionToCode({
+    isCode,
+    mainRef: iPhoneBlockRef,
+    codeRef: iPhoneCodeRef,
+  });
 
   const onChangeSlider =
     (type: string) => (_event: Event, newValue: number | number[]) => {
@@ -35,81 +42,16 @@ export default function Block() {
   }, 300);
 
   useEffect(() => {
-    const blockPart = iPhoneBlockRef.current;
-    const codePart = iPhoneCodeRef.current;
-    if (!isMountRef.current) {
-      isMountRef.current = true;
-      gsap.set(codePart, {
-        rotateY: "-90deg",
-        x: "375px",
-        opacity: 1,
-      });
-      gsap.set(blockPart, { opacity: 1 });
-      return;
-    }
-
-    if (isCode) {
-      gsap.to(blockPart, {
-        rotateY: "90deg",
-        x: "-375px",
-        duration: 1,
-      });
-      gsap.fromTo(
-        codePart,
-        {
-          rotateY: "-90deg",
-          x: "375px",
-          duration: 0,
-        },
-        {
-          rotateY: "0deg",
-          x: "0",
-          duration: 1,
-        }
-      );
-    } else {
-      gsap.to(codePart, {
-        rotateY: "-90deg",
-        x: "375px",
-        duration: 1,
-      });
-      gsap.fromTo(
-        blockPart,
-        {
-          rotateY: "90deg",
-          x: "-375px",
-          duration: 0,
-        },
-        {
-          rotateY: "0deg",
-          x: "0",
-          duration: 1,
-        }
-      );
-    }
-  }, [isCode]);
-
-  useEffect(() => {
+    const from = getGsapFrom(gsapStates);
     const ctx = gsap.context(() => {
       if (iPhoneBlockRef.current) {
         const timeline = gsap.fromTo(
           iPhoneBlockRef.current,
           {
-            x: gsapStates.xFrom,
-            y: gsapStates.yFrom,
-            rotate: gsapStates.rotateFrom,
-            rotateX: gsapStates.rotateXFrom,
-            rotateY: gsapStates.rotateYFrom,
-            opacity: gsapStates.opacityFrom,
+            ...getGsapFrom(gsapStates),
           },
           {
-            x: gsapStates.xTo,
-            y: gsapStates.yTo,
-            rotate: gsapStates.rotateTo,
-            rotateX: gsapStates.rotateXTo,
-            rotateY: gsapStates.rotateYTo,
-            opacity: gsapStates.opacityTo,
-            stagger: gsapStates.stagger,
+            ...getGsapTo(gsapStates),
             duration: gsapStates.duration,
             ease: gsapStates.easingType,
           }
