@@ -8,11 +8,11 @@ import { useDebounce } from "@toss/react";
 import IPhoneX from "../components/IPhoneX";
 import { gsapOptions } from "./gsapOptions";
 import GsapSlider from "../components/GsapSlider";
-import TextAndCode from "./TextAndCode";
 import GsapSelect from "../components/GsapSelect";
 import { TextType } from "../types/gsapOption";
-import { getGsapFrom, getGsapTo } from "../utils/getGsapData";
 import useTransitionToCode from "../hooks/useTransitionToCode";
+import { getGsapData } from "../utils/getGsapData";
+import InsideIPhone from "../components/InsideIPhone";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);
@@ -45,24 +45,23 @@ export default function Text() {
   }, 300);
 
   useEffect(() => {
-    const text = new SplitType("div.gsap--text");
+    const text = new SplitType("div.gsap--animation");
     const words = text[gsapStates.textType as TextType];
     if (words) textRef.current = words;
   }, [gsapStates.textType]);
 
   useEffect(() => {
+    const gsapData = getGsapData(gsapStates);
     const ctx = gsap.context(() => {
       if (textRef.current) {
         const timeline = gsap.fromTo(
           textRef.current,
           {
-            ...getGsapFrom(gsapStates),
+            ...gsapData.from,
           },
           {
-            ...getGsapTo(gsapStates),
-            stagger: gsapStates.stagger,
-            duration: gsapStates.duration,
-            ease: gsapStates.easingType,
+            ...gsapData.to,
+            ...gsapData.rest,
           }
         );
         timeline.pause();
@@ -105,12 +104,21 @@ export default function Text() {
         })}
       </OptionsContainer>
       <IPhoneX>
-        <TextAndCode
+        <InsideIPhone
           setIsCode={setIsCode}
           gsapStates={gsapStates}
-          textRef={iPhoneTextRef}
+          animationRef={iPhoneTextRef}
           codeRef={iPhoneCodeRef}
-        />
+        >
+          <>
+            {`Lorem Ipsum is simply dummy text of the printing and typesetting
+      industry.`}
+            <div style={{ height: "1rem" }} />
+            {`Lorem Ipsum has been the industry's standard dummy text ever since the
+      1500s, when an unknown printer took a galley of type and scrambled it
+      to make a type specimen book.`}
+          </>
+        </InsideIPhone>
       </IPhoneX>
     </Container>
   );

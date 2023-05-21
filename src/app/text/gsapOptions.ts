@@ -70,7 +70,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     default: "words",
   },
   {
-    type: "easingType",
+    type: "ease",
     componentType: "select",
     options: easingOptions,
     default: "back",

@@ -8,14 +8,14 @@ import { gsapOptions } from "./gsapOptions";
 import GsapSelect from "../components/GsapSelect";
 import GsapSlider from "../components/GsapSlider";
 import IPhoneX from "../components/IPhoneX";
-import BlockAndCode from "./BlockAndCode";
-import { getGsapFrom, getGsapTo } from "../utils/getGsapData";
 import useTransitionToCode from "../hooks/useTransitionToCode";
+import InsideIPhone from "../components/InsideIPhone";
+import { getGsapData } from "../utils/getGsapData";
 
 export default function Block() {
   const [counter, setCounter] = useState(0);
   const [isCode, setIsCode] = useState(false);
-  const iPhoneBlockRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<HTMLDivElement>(null);
   const iPhoneCodeRef = useRef<HTMLDivElement>(null);
   const [gsapStates, setGsapStates] = useState(
     gsapOptions.reduce((acc, cur) => {
@@ -27,7 +27,7 @@ export default function Block() {
 
   useTransitionToCode({
     isCode,
-    mainRef: iPhoneBlockRef,
+    mainRef: animationRef,
     codeRef: iPhoneCodeRef,
   });
 
@@ -42,18 +42,17 @@ export default function Block() {
   }, 300);
 
   useEffect(() => {
-    const from = getGsapFrom(gsapStates);
+    const gsapData = getGsapData(gsapStates);
     const ctx = gsap.context(() => {
-      if (iPhoneBlockRef.current) {
+      if (animationRef.current) {
         const timeline = gsap.fromTo(
-          iPhoneBlockRef.current,
+          animationRef.current,
           {
-            ...getGsapFrom(gsapStates),
+            ...gsapData.from,
           },
           {
-            ...getGsapTo(gsapStates),
-            duration: gsapStates.duration,
-            ease: gsapStates.easingType,
+            ...gsapData.to,
+            ...gsapData.rest,
           }
         );
         timeline.pause();
@@ -96,12 +95,16 @@ export default function Block() {
         })}
       </OptionsContainer>
       <IPhoneX>
-        <BlockAndCode
+        <InsideIPhone
           setIsCode={setIsCode}
           gsapStates={gsapStates}
-          blockRef={iPhoneBlockRef}
+          animationRef={animationRef}
           codeRef={iPhoneCodeRef}
-        />
+        >
+          <div
+            style={{ width: "100px", height: "100px", backgroundColor: "cyan" }}
+          />
+        </InsideIPhone>
       </IPhoneX>
     </Container>
   );

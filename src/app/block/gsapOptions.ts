@@ -104,7 +104,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     default: 0.5,
   },
   {
-    type: "easingType",
+    type: "ease",
     componentType: "select",
     options: easingOptions,
     default: "power0",

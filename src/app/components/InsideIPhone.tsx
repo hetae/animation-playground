@@ -1,31 +1,31 @@
-import { forwardRef } from "react";
+import { ReactNode, forwardRef } from "react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/joy";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { convertObjectToString } from "../utils/convertObjectToStringWithTab";
-import { getGsapFrom, getGsapTo } from "../utils/getGsapData";
+import { getGsapData } from "../utils/getGsapData";
 
-function TextAndCode({
+function InsideIPhone({
   setIsCode,
   gsapStates,
-  textRef,
+  animationRef,
   codeRef,
+  children,
 }: {
   setIsCode: (isCode: boolean) => void;
   gsapStates: { [key: string]: number };
-  textRef: React.RefObject<HTMLDivElement>;
+  animationRef: React.RefObject<HTMLDivElement>;
   codeRef: React.RefObject<HTMLDivElement>;
+  children: ReactNode;
 }) {
-  const codeString = `gsap.fromTo(textRef.current,
+  const codeString = `gsap.fromTo(animationRef.current,
   {
-${convertObjectToString(getGsapFrom(gsapStates), 2)}
+${convertObjectToString(getGsapData(gsapStates).from, 2)}
   },
   {
-${convertObjectToString(getGsapTo(gsapStates), 2)}
-    stagger: ${gsapStates.stagger},
-    duration: ${gsapStates.duration},
-    ease: ${gsapStates.easingType},
+${convertObjectToString(getGsapData(gsapStates).to, 2)}
+${convertObjectToString(getGsapData(gsapStates).rest, 2)}
   }
 );`;
 
@@ -40,15 +40,9 @@ ${convertObjectToString(getGsapTo(gsapStates), 2)}
           {codeString}
         </SyntaxHighlighter>
       </IPhoneTextDiv>
-      <IPhoneTextDiv className="gsap--text" ref={textRef}>
-        {`Lorem Ipsum is simply dummy text of the printing and typesetting
-      industry.`}
-        <div style={{ height: "1rem" }} />
-        {`Lorem Ipsum has been the industry's standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it
-      to make a type specimen book.`}
+      <IPhoneTextDiv className="gsap--animation" ref={animationRef}>
+        {children}
       </IPhoneTextDiv>
-
       <IphoneButtons>
         <Button onClick={() => setIsCode(false)}>Screen</Button>
         <Button onClick={() => setIsCode(true)}>Code</Button>
@@ -56,7 +50,7 @@ ${convertObjectToString(getGsapTo(gsapStates), 2)}
     </>
   );
 }
-export default forwardRef(TextAndCode);
+export default forwardRef(InsideIPhone);
 
 const IPhoneTextDiv = styled.div<{ isCode?: boolean }>`
   position: absolute;

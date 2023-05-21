@@ -7,8 +7,8 @@ export default function GsapSelect({
   setGsapStates,
 }: {
   item: gsapOptionsTypeObj;
-  gsapStates: { [key: string]: number };
-  setGsapStates: (gsapStates: { [key: string]: number }) => void;
+  gsapStates: { [key: string]: number | string };
+  setGsapStates: (gsapStates: { [key: string]: number | string }) => void;
 }) {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>

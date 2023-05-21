@@ -24,7 +24,7 @@ export type gsapOptionsType =
   | "rotateYTo"
   | "duration"
   | "textType"
-  | "easingType";
+  | "ease";
 
 export type EasingType =
   | "power0"

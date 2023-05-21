@@ -1,21 +1,26 @@
-export const getGsapFrom = (gsapState: { [key: string]: any }) => {
-  const gsapFrom: { [key: string]: any } = {};
-  Object.keys(gsapState).forEach((key) => {
+export const getGsapData = (gsapState: { [key: string]: any }) => {
+  let from = {} as { [key: string]: any };
+  let to = {} as { [key: string]: any };
+  let rest = {} as { [key: string]: any };
+
+  Object.keys(gsapState).map((key) => {
     if (key.endsWith("From")) {
       const newKey = key.slice(0, key.length - 4);
-      gsapFrom[newKey] = gsapState[key];
-    }
-  });
-  return gsapFrom;
-};
-
-export const getGsapTo = (gsapState: { [key: string]: any }) => {
-  const gsapTo: { [key: string]: any } = {};
-  Object.keys(gsapState).forEach((key) => {
-    if (key.endsWith("To")) {
+      from[newKey] = gsapState[key];
+    } else if (key.endsWith("To")) {
       const newKey = key.slice(0, key.length - 2);
-      gsapTo[newKey] = gsapState[key];
+      to[newKey] = gsapState[key];
+      // TODO fix exception
+    } else if (key === "textType") {
+      return;
+    } else {
+      rest[key] = gsapState[key];
     }
   });
-  return gsapTo;
+
+  return {
+    from,
+    to,
+    rest,
+  };
 };
