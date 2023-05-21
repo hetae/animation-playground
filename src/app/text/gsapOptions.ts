@@ -4,15 +4,20 @@ export type gsapOptionsType =
   | "yFrom"
   | "yTo"
   | "opacityFrom"
-  | "opacityTo";
+  | "opacityTo"
+  | "stagger"
+  | "duration"
+  | "textType"
+  | "easingType";
 
 export type gsapOptionsTypeObj = {
   type: gsapOptionsType;
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   componentType?: "slider" | "input" | "select" | "none";
   step?: number;
-  default: number;
+  default: number | EasingType | TextType;
+  options?: string[];
 };
 
 export type EasingType =
@@ -39,6 +44,8 @@ export const easingOptions = [
   "rough",
   "expo",
 ];
+
+export type TextType = "words" | "chars" | "lines";
 
 export const gsapOptions: gsapOptionsTypeObj[] = [
   {
@@ -86,5 +93,33 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     componentType: "slider",
     step: 0.1,
     default: 1,
+  },
+  {
+    type: "stagger",
+    min: 0,
+    max: 1,
+    componentType: "slider",
+    step: 0.1,
+    default: 0.1,
+  },
+  {
+    type: "duration",
+    min: 0,
+    max: 2,
+    componentType: "slider",
+    step: 0.1,
+    default: 0.5,
+  },
+  {
+    type: "textType",
+    componentType: "select",
+    options: ["words", "chars", "lines"],
+    default: "words",
+  },
+  {
+    type: "easingType",
+    componentType: "select",
+    options: easingOptions,
+    default: "back",
   },
 ];
