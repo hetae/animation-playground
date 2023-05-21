@@ -54,9 +54,14 @@ export default function Home() {
               Text
             </Typography>
           </Item>
+          <Item onClick={() => router.push("/block")}>
+            <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
+              Block
+            </Typography>
+          </Item>
           <Item>
             <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
-              Effect
+              Presets
             </Typography>
           </Item>
         </Stack>

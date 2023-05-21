@@ -1,21 +1,19 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import SplitType from "split-type";
 import styled from "@emotion/styled";
+import { gsap } from "gsap";
 import { Button, Divider } from "@mui/joy";
-import { useDebounce } from "@toss/react";
-import IPhoneX from "../components/IPhoneX";
-import { TextType, gsapOptions } from "./gsapOptions";
-import GsapSlider from "../components/GsapSlider";
-import TextAndCode from "./TextAndCode";
+import { useEffect, useRef, useState } from "react";
+import { gsapOptions } from "./gsapOptions";
 import GsapSelect from "../components/GsapSelect";
+import GsapSlider from "../components/GsapSlider";
+import IPhoneX from "../components/IPhoneX";
+import BlockAndCode from "./BlockAndCode";
+import { useDebounce } from "@toss/react";
 
-export default function Text() {
-  const textRef = useRef<HTMLElement[] | null>(null);
+export default function Block() {
   const [counter, setCounter] = useState(0);
   const [isCode, setIsCode] = useState(false);
-  const iPhoneTextRef = useRef<HTMLDivElement>(null);
+  const iPhoneBlockRef = useRef<HTMLDivElement>(null);
   const iPhoneCodeRef = useRef<HTMLDivElement>(null);
   const isMountRef = useRef(false);
   const [gsapStates, setGsapStates] = useState(
@@ -37,7 +35,7 @@ export default function Text() {
   }, 300);
 
   useEffect(() => {
-    const textPart = iPhoneTextRef.current;
+    const blockPart = iPhoneBlockRef.current;
     const codePart = iPhoneCodeRef.current;
     if (!isMountRef.current) {
       isMountRef.current = true;
@@ -46,12 +44,12 @@ export default function Text() {
         x: "375px",
         opacity: 1,
       });
-      gsap.set(textPart, { opacity: 1 });
+      gsap.set(blockPart, { opacity: 1 });
       return;
     }
 
     if (isCode) {
-      gsap.to(textPart, {
+      gsap.to(blockPart, {
         rotateY: "90deg",
         x: "-375px",
         duration: 1,
@@ -76,7 +74,7 @@ export default function Text() {
         duration: 1,
       });
       gsap.fromTo(
-        textPart,
+        blockPart,
         {
           rotateY: "90deg",
           x: "-375px",
@@ -92,16 +90,10 @@ export default function Text() {
   }, [isCode]);
 
   useEffect(() => {
-    const text = new SplitType("div.gsap--text");
-    const words = text[gsapStates.textType as TextType];
-    if (words) textRef.current = words;
-  }, [gsapStates.textType]);
-
-  useEffect(() => {
     const ctx = gsap.context(() => {
-      if (textRef.current) {
+      if (iPhoneBlockRef.current) {
         const timeline = gsap.fromTo(
-          textRef.current,
+          iPhoneBlockRef.current,
           {
             x: gsapStates.xFrom,
             y: gsapStates.yFrom,
@@ -156,10 +148,10 @@ export default function Text() {
         })}
       </OptionsContainer>
       <IPhoneX>
-        <TextAndCode
+        <BlockAndCode
           setIsCode={setIsCode}
           gsapStates={gsapStates}
-          textRef={iPhoneTextRef}
+          blockRef={iPhoneBlockRef}
           codeRef={iPhoneCodeRef}
         />
       </IPhoneX>
