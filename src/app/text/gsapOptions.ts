@@ -15,6 +15,31 @@ export type gsapOptionsTypeObj = {
   default: number;
 };
 
+export type EasingType =
+  | "power0"
+  | "power1"
+  | "power2"
+  | "power3"
+  | "power4"
+  | "back"
+  | "elastic"
+  | "bounce"
+  | "rough"
+  | "expo";
+
+export const easingOptions = [
+  "power0",
+  "power1",
+  "power2",
+  "power3",
+  "power4",
+  "back",
+  "elastic",
+  "bounce",
+  "rough",
+  "expo",
+];
+
 export const gsapOptions: gsapOptionsTypeObj[] = [
   {
     type: "xFrom",

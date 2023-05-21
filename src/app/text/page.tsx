@@ -3,29 +3,20 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import SplitType from "split-type";
 import IPhoneX from "../components/IPhoneX";
-import { gsapOptions } from "./gsapOptions";
+import { EasingType, easingOptions, gsapOptions } from "./gsapOptions";
 import GsapSlider from "../components/Sliders";
 import { useDebounce } from "@toss/react";
 import { Button, Select, Option, Typography } from "@mui/joy";
+import styled from "@emotion/styled";
 
 type TextStyle = "words" | "chars" | "lines";
-type EasingType =
-  | "power0"
-  | "power1"
-  | "power2"
-  | "power3"
-  | "power4"
-  | "back"
-  | "elastic"
-  | "bounce"
-  | "rough"
-  | "expo";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);
   const [counter, setCounter] = useState(0);
   const [textStyle, setTextStyle] = useState<TextStyle>("words");
   const [easing, setEasing] = useState<EasingType>("back" as EasingType);
+  const [isCode, setIsCode] = useState(false);
   const [gsapStates, setGsapStates] = useState(
     gsapOptions.reduce((acc, cur) => {
       acc[cur.type] = cur.default;
@@ -44,10 +35,11 @@ export default function Text() {
   }, 300);
 
   useEffect(() => {
-    const text = new SplitType("div.text1");
+    if (isCode) return;
+    const text = new SplitType("div.gsap--text");
     const words = text[textStyle];
     if (words) textRef.current = words;
-  }, [textStyle]);
+  }, [textStyle, isCode]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -75,35 +67,13 @@ export default function Text() {
     return () => {
       ctx.revert();
     };
-  }, [counter, gsapStates, handleGsapAnimation, textStyle, easing]);
+  }, [counter, gsapStates, handleGsapAnimation, textStyle, isCode, easing]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        maxWidth: 800,
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          gap: "1rem",
-        }}
-      >
+    <Container>
+      <OptionsContainer>
         <Button onClick={() => setCounter(counter + 1)}>refresh</Button>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-          }}
-        >
+        <ButtonWithText>
           <Typography level="body1">text style: </Typography>
           <Select
             defaultValue="words"
@@ -113,38 +83,20 @@ export default function Text() {
             <Option value="words">words</Option>
             <Option value="lines">lines</Option>
           </Select>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-          }}
-        >
+        </ButtonWithText>
+        <ButtonWithText>
           <Typography level="body1">easing: </Typography>
           <Select
             defaultValue="back"
             onChange={(_e, val: EasingType | null) => val && setEasing(val)}
           >
-            {[
-              "power0",
-              "power1",
-              "power2",
-              "power3",
-              "power4",
-              "back",
-              "elastic",
-              "bounce",
-              "rough",
-              "expo",
-            ].map((item) => (
+            {easingOptions.map((item) => (
               <Option key={item} value={item}>
                 {item}
               </Option>
             ))}
           </Select>
-        </div>
+        </ButtonWithText>
         <div style={{ height: 10 }} />
         {gsapOptions.map((item) => {
           if (item.componentType === "slider")
@@ -158,20 +110,62 @@ export default function Text() {
               />
             );
         })}
-      </div>
+      </OptionsContainer>
       <IPhoneX>
-        <div
-          className="text1"
-          style={{ fontSize: 24, padding: "48px 12px 0 12px", lineHeight: 1.4 }}
-        >
-          {`Lorem Ipsum is simply dummy text of the printing and typesetting
+        {isCode ? (
+          <>code</>
+        ) : (
+          <IPhoneTextDiv className="gsap--text">
+            {`Lorem Ipsum is simply dummy text of the printing and typesetting
           industry.`}
-          <br />
-          {`Lorem Ipsum has been the industry's standard dummy text ever since the
+            <div style={{ height: "1rem" }} />
+            {`Lorem Ipsum has been the industry's standard dummy text ever since the
           1500s, when an unknown printer took a galley of type and scrambled it
           to make a type specimen book.`}
-        </div>
+          </IPhoneTextDiv>
+        )}
+        <IphoneButtons>
+          <Button onClick={() => setIsCode(false)}>Screen</Button>
+          <Button onClick={() => setIsCode(true)}>Code</Button>
+        </IphoneButtons>
       </IPhoneX>
-    </div>
+    </Container>
   );
 }
+
+const IPhoneTextDiv = styled.div`
+  font-size: 24px;
+  padding: 48px 12px 0 12px;
+  line-height: 1.4;
+`;
+
+const IphoneButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+`;
+
+const OptionsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const ButtonWithText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+`;
