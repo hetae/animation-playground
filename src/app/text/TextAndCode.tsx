@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import { Button } from "@mui/joy";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { convertObjectToString } from "../utils/convertObjectToStringWithTab";
+import { getGsapFrom, getGsapTo } from "../utils/getGsapData";
 
 function TextAndCode({
   setIsCode,
@@ -17,14 +19,10 @@ function TextAndCode({
 }) {
   const codeString = `gsap.fromTo(textRef.current,
   {
-    x: ${gsapStates.xFrom},
-    y: ${gsapStates.yFrom},
-    opacity: ${gsapStates.opacityFrom},
+${convertObjectToString(getGsapFrom(gsapStates), 2)}
   },
   {
-    x: ${gsapStates.xTo},
-    y: ${gsapStates.yTo},
-    opacity: ${gsapStates.opacityTo},
+${convertObjectToString(getGsapTo(gsapStates), 2)}
     stagger: ${gsapStates.stagger},
     duration: ${gsapStates.duration},
     ease: ${gsapStates.easingType},
