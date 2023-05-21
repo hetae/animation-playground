@@ -50,7 +50,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     type: "opacityFrom",
     min: 0,
     max: 1,
-    componentType: "slider",
+    componentType: "none",
     step: 0.1,
     default: 0,
   },

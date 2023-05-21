@@ -6,7 +6,7 @@ import IPhoneX from "../components/IPhoneX";
 import { gsapOptions } from "./gsapOptions";
 import GsapSlider from "../components/Sliders";
 import { useDebounce } from "@toss/react";
-import { Button, Select, Option } from "@mui/joy";
+import { Button, Select, Option, Typography } from "@mui/joy";
 
 type TextStyle = "words" | "chars" | "lines";
 type EasingType =
@@ -92,16 +92,19 @@ export default function Text() {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
+          gap: "1rem",
         }}
       >
+        <Button onClick={() => setCounter(counter + 1)}>refresh</Button>
         <div
           style={{
             display: "flex",
-            width: "100%",
             justifyContent: "center",
+            alignItems: "center",
             gap: "1rem",
           }}
         >
+          <Typography level="body1">text style: </Typography>
           <Select
             defaultValue="words"
             onChange={(_e, val: TextStyle | null) => val && setTextStyle(val)}
@@ -110,6 +113,16 @@ export default function Text() {
             <Option value="words">words</Option>
             <Option value="lines">lines</Option>
           </Select>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
+          }}
+        >
+          <Typography level="body1">easing: </Typography>
           <Select
             defaultValue="back"
             onChange={(_e, val: EasingType | null) => val && setEasing(val)}
@@ -131,7 +144,6 @@ export default function Text() {
               </Option>
             ))}
           </Select>
-          <Button onClick={() => setCounter(counter + 1)}>refresh</Button>
         </div>
         <div style={{ height: 10 }} />
         {gsapOptions.map((item) => {
@@ -154,7 +166,7 @@ export default function Text() {
         >
           {`Lorem Ipsum is simply dummy text of the printing and typesetting
           industry.`}
-          <div style={{ height: 10 }} />
+          <br />
           {`Lorem Ipsum has been the industry's standard dummy text ever since the
           1500s, when an unknown printer took a galley of type and scrambled it
           to make a type specimen book.`}
