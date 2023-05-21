@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { Button } from "@mui/joy";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { convertObjectToString } from "../utils/convertObjectToStringWithTab";
-import { getGsapData } from "../utils/getGsapData";
+import { convertObjectToString } from "@utils/convertObjectToStringWithTab";
+import { getGsapData } from "@utils/getGsapData";
 
 function InsideIPhone({
   setIsCode,

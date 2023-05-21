@@ -5,12 +5,12 @@ import { Button, Divider } from "@mui/joy";
 import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@toss/react";
 import { gsapOptions } from "./gsapOptions";
-import GsapSelect from "../components/GsapSelect";
-import GsapSlider from "../components/GsapSlider";
-import IPhoneX from "../components/IPhoneX";
-import useTransitionToCode from "../hooks/useTransitionToCode";
-import InsideIPhone from "../components/InsideIPhone";
-import { getGsapData } from "../utils/getGsapData";
+import GsapSelect from "@components/GsapSelect";
+import GsapSlider from "@components/GsapSlider";
+import IPhoneX from "@components/IPhoneX";
+import useTransitionToCode from "@hooks/useTransitionToCode";
+import InsideIPhone from "@components/InsideIPhone";
+import { getGsapData } from "@utils/getGsapData";
 
 export default function Block() {
   const [counter, setCounter] = useState(0);

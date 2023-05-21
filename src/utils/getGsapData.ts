@@ -1,4 +1,5 @@
 export const getGsapData = (gsapState: { [key: string]: any }) => {
+  // TODO fix types
   let from = {} as { [key: string]: any };
   let to = {} as { [key: string]: any };
   let rest = {} as { [key: string]: any };

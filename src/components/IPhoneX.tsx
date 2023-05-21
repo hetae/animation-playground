@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
-import "../../styles/device.min.css";
+import "../styles/device.min.css";
 
 export default function IPhoneX({ children }: { children: ReactNode }) {
   return (
     <div className="marvel-device iphone-x" style={{ position: "relative" }}>
       <div className="notch">
-        <div className="camera"></div>
+        <div className="  camera"></div>
         <div className="speaker"></div>
       </div>
       <div className="top-bar"></div>

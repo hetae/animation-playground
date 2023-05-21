@@ -5,14 +5,14 @@ import SplitType from "split-type";
 import styled from "@emotion/styled";
 import { Button, Divider } from "@mui/joy";
 import { useDebounce } from "@toss/react";
-import IPhoneX from "../components/IPhoneX";
+import IPhoneX from "@components/IPhoneX";
 import { gsapOptions } from "./gsapOptions";
-import GsapSlider from "../components/GsapSlider";
-import GsapSelect from "../components/GsapSelect";
-import { TextType } from "../types/gsapOption";
-import useTransitionToCode from "../hooks/useTransitionToCode";
-import { getGsapData } from "../utils/getGsapData";
-import InsideIPhone from "../components/InsideIPhone";
+import GsapSlider from "@components/GsapSlider";
+import GsapSelect from "@components/GsapSelect";
+import { TextType } from "@/types/gsapOption";
+import useTransitionToCode from "@hooks/useTransitionToCode";
+import { getGsapData } from "@utils/getGsapData";
+import InsideIPhone from "@components/InsideIPhone";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);

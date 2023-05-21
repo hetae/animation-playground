@@ -1,4 +1,4 @@
-import { easingOptions, gsapOptionsTypeObj } from "../types/gsapOption";
+import { easingOptions, gsapOptionsTypeObj } from "../../types/gsapOption";
 
 export const gsapOptions: gsapOptionsTypeObj[] = [
   {
