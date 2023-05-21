@@ -1,26 +1,46 @@
+import { forwardRef } from "react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/joy";
-import { forwardRef } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 function TextAndCode({
-  isCode,
   setIsCode,
-  gsapOptions,
+  gsapStates,
   textRef,
   codeRef,
 }: {
-  isCode: boolean;
   setIsCode: (isCode: boolean) => void;
-  gsapOptions: { [key: string]: number };
+  gsapStates: { [key: string]: number };
   textRef: React.RefObject<HTMLDivElement>;
   codeRef: React.RefObject<HTMLDivElement>;
 }) {
+  const codeString = `gsap.fromTo(textRef.current,
+  {
+    x: ${gsapStates.xFrom},
+    y: ${gsapStates.yFrom},
+    opacity: ${gsapStates.opacityFrom},
+  },
+  {
+    x: ${gsapStates.xTo},
+    y: ${gsapStates.yTo},
+    opacity: ${gsapStates.opacityTo},
+    stagger: ${gsapStates.stagger},
+    duration: ${gsapStates.duration},
+    ease: ${gsapStates.easingType},
+  }
+);`;
+
   return (
     <>
-      <IPhoneTextDiv className="gsap--code" ref={codeRef}>
-        {`nlajkds.`}
-        <div style={{ height: "1rem" }} />
-        {`asdfasdfa`}
+      <IPhoneTextDiv className="gsap--code" isCode ref={codeRef}>
+        <SyntaxHighlighter
+          language="typescript"
+          style={{ a11yLight }}
+          wrapLongLines
+        >
+          {codeString}
+        </SyntaxHighlighter>
       </IPhoneTextDiv>
       <IPhoneTextDiv className="gsap--text" ref={textRef}>
         {`Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -40,11 +60,12 @@ function TextAndCode({
 }
 export default forwardRef(TextAndCode);
 
-const IPhoneTextDiv = styled.div`
+const IPhoneTextDiv = styled.div<{ isCode?: boolean }>`
   position: absolute;
-  font-size: 24px;
+  font-size: ${(props) => (props.isCode ? "16px" : "24px")};
   padding: 48px 12px 0 12px;
   line-height: 1.4;
+  opacity: 0;
 `;
 
 const IphoneButtons = styled.div`
