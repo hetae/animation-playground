@@ -1,33 +1,36 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/joy";
+import { forwardRef } from "react";
 
-export default function TextAndCode({
+function TextAndCode({
   isCode,
   setIsCode,
   gsapOptions,
+  textRef,
+  codeRef,
 }: {
   isCode: boolean;
   setIsCode: (isCode: boolean) => void;
   gsapOptions: { [key: string]: number };
+  textRef: React.RefObject<HTMLDivElement>;
+  codeRef: React.RefObject<HTMLDivElement>;
 }) {
   return (
     <>
-      {isCode ? (
-        <IPhoneTextDiv className="gsap--text">
-          {`nlajkds.`}
-          <div style={{ height: "1rem" }} />
-          {`asdfasdfa`}
-        </IPhoneTextDiv>
-      ) : (
-        <IPhoneTextDiv className="gsap--text">
-          {`Lorem Ipsum is simply dummy text of the printing and typesetting
+      <IPhoneTextDiv className="gsap--code" ref={codeRef}>
+        {`nlajkds.`}
+        <div style={{ height: "1rem" }} />
+        {`asdfasdfa`}
+      </IPhoneTextDiv>
+      <IPhoneTextDiv className="gsap--text" ref={textRef}>
+        {`Lorem Ipsum is simply dummy text of the printing and typesetting
       industry.`}
-          <div style={{ height: "1rem" }} />
-          {`Lorem Ipsum has been the industry's standard dummy text ever since the
+        <div style={{ height: "1rem" }} />
+        {`Lorem Ipsum has been the industry's standard dummy text ever since the
       1500s, when an unknown printer took a galley of type and scrambled it
       to make a type specimen book.`}
-        </IPhoneTextDiv>
-      )}
+      </IPhoneTextDiv>
+
       <IphoneButtons>
         <Button onClick={() => setIsCode(false)}>Screen</Button>
         <Button onClick={() => setIsCode(true)}>Code</Button>
@@ -35,8 +38,10 @@ export default function TextAndCode({
     </>
   );
 }
+export default forwardRef(TextAndCode);
 
 const IPhoneTextDiv = styled.div`
+  position: absolute;
   font-size: 24px;
   padding: 48px 12px 0 12px;
   line-height: 1.4;

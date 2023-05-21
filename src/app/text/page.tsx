@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import SplitType from "split-type";
 import styled from "@emotion/styled";
 import { Button, Divider } from "@mui/joy";
-import { useDebounce } from "@toss/react";
+import { useDebounce, useIsMounted } from "@toss/react";
 import IPhoneX from "../components/IPhoneX";
 import { TextType, gsapOptions } from "./gsapOptions";
 import GsapSlider from "./GsapSlider";
@@ -15,6 +15,9 @@ export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);
   const [counter, setCounter] = useState(0);
   const [isCode, setIsCode] = useState(false);
+  const iPhoneTextRef = useRef<HTMLDivElement>(null);
+  const iPhoneCodeRef = useRef<HTMLDivElement>(null);
+  const isMounted = useIsMounted();
   const [gsapStates, setGsapStates] = useState(
     gsapOptions.reduce((acc, cur) => {
       acc[cur.type] = cur.default;
@@ -34,10 +37,56 @@ export default function Text() {
   }, 300);
 
   useEffect(() => {
+    const textPart = iPhoneTextRef.current;
+    const codePart = iPhoneCodeRef.current;
+    if (!isMounted) {
+      gsap.set(codePart, { x: "375px" });
+    } else if (isCode) {
+      gsap.to(textPart, {
+        rotateY: "45deg",
+        x: "-375px",
+        duration: 1,
+      });
+      gsap.fromTo(
+        codePart,
+        {
+          rotateY: "-45deg",
+          x: "375px",
+          duration: 0,
+        },
+        {
+          rotateY: "0deg",
+          x: "0",
+          duration: 1,
+        }
+      );
+    } else {
+      gsap.to(codePart, {
+        rotateY: "-45deg",
+        x: "375px",
+        duration: 1,
+      });
+      gsap.fromTo(
+        textPart,
+        {
+          rotateY: "45deg",
+          x: "-375px",
+          duration: 0,
+        },
+        {
+          rotateY: "0deg",
+          x: "0",
+          duration: 1,
+        }
+      );
+    }
+  }, [isCode, isMounted]);
+
+  useEffect(() => {
     const text = new SplitType("div.gsap--text");
     const words = text[gsapStates.textType as TextType];
     if (words) textRef.current = words;
-  }, [isCode, gsapStates.textType]);
+  }, [gsapStates.textType]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -65,7 +114,7 @@ export default function Text() {
     return () => {
       ctx.revert();
     };
-  }, [counter, gsapStates, handleGsapAnimation, isCode]);
+  }, [counter, gsapStates, handleGsapAnimation]);
 
   return (
     <Container>
@@ -102,6 +151,8 @@ export default function Text() {
           isCode={isCode}
           setIsCode={setIsCode}
           gsapOptions={gsapStates}
+          textRef={iPhoneTextRef}
+          codeRef={iPhoneCodeRef}
         />
       </IPhoneX>
     </Container>
