@@ -30,7 +30,7 @@ export default function useTransitionToCode({
       gsap.to(blockPart, {
         rotateY: "90deg",
         x: "-375px",
-        duration: 1,
+        duration: 0.5,
       });
       gsap.fromTo(
         codePart,
@@ -42,14 +42,14 @@ export default function useTransitionToCode({
         {
           rotateY: "0deg",
           x: "0",
-          duration: 1,
+          duration: 0.5,
         }
       );
     } else {
       gsap.to(codePart, {
         rotateY: "-90deg",
         x: "375px",
-        duration: 1,
+        duration: 0.5,
       });
       gsap.fromTo(
         blockPart,
@@ -61,7 +61,7 @@ export default function useTransitionToCode({
         {
           rotateY: "0deg",
           x: "0",
-          duration: 1,
+          duration: 0.5,
         }
       );
     }

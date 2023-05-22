@@ -76,7 +76,7 @@ export default function Text() {
   return (
     <Container>
       <OptionsContainer>
-        <Button onClick={() => setCounter(counter + 1)}>refresh</Button>
+        <Button onClick={() => setCounter(counter + 1)}>replay</Button>
         {gsapOptions.map((item) => {
           if (item.componentType === "select") {
             return (
