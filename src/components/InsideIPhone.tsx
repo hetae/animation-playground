@@ -1,10 +1,12 @@
 import { ReactNode, forwardRef } from "react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/joy";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { convertObjectToString } from "@utils/convertObjectToStringWithTab";
 import { getGsapData } from "@utils/getGsapData";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import toast, { Toaster } from "react-hot-toast";
+import "@/styles/codeSyntax.css";
 
 function InsideIPhone({
   setIsCode,
@@ -29,16 +31,21 @@ ${convertObjectToString(getGsapData(gsapStates).rest, 2)}
   }
 );`;
 
+  const copyCode = () => {
+    navigator.clipboard.writeText(codeString);
+    toast.success("Copied to clipboard!");
+  };
+
   return (
     <>
+      <Toaster position="top-left" />
       <IPhoneTextDiv className="gsap--code" isCode ref={codeRef}>
-        <SyntaxHighlighter
-          language="typescript"
-          style={{ a11yLight }}
-          wrapLongLines
-        >
+        <SyntaxHighlighter language="typescript" wrapLongLines>
           {codeString}
         </SyntaxHighlighter>
+        <CopyIconContainer>
+          <ContentCopyIcon onClick={copyCode} />
+        </CopyIconContainer>
       </IPhoneTextDiv>
       <IPhoneTextDiv className="gsap--animation" ref={animationRef}>
         {children}
@@ -51,6 +58,26 @@ ${convertObjectToString(getGsapData(gsapStates).rest, 2)}
   );
 }
 export default forwardRef(InsideIPhone);
+
+const ToasterContainer = styled.div`
+  position: "relative";
+  z-index: 100;
+`;
+
+const CopyIconContainer = styled.div`
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 10;
+  opacity: 0.6;
+  background-color: white;
+  transition: opacity 0.3s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+`;
 
 const IPhoneTextDiv = styled.div<{ isCode?: boolean }>`
   position: absolute;
