@@ -19,3 +19,7 @@ Please feel free to make any Issue or Pull Request
 
 > Animation is implemented via gsap.
 > Visit [site](https://greensock.com/) for more
+
+made by 071yoon
+
+![hanryang-animation-low](https://github.com/hetae/animation-playground/assets/66371206/027fb518-8750-426d-a5b0-4457996e1deb)
