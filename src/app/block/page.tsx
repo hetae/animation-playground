@@ -113,7 +113,7 @@ export default function Block() {
             style={{
               width: "100px",
               height: "100px",
-              backgroundColor: "cyan",
+              backgroundColor: "#c1f3a9",
               borderRadius: "1rem",
             }}
           />

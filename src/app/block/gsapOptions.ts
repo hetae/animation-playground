@@ -7,7 +7,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     max: 100,
     componentType: "slider",
     step: 1,
-    default: 0,
+    default: -100,
   },
   {
     type: "xTo",
@@ -22,7 +22,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     max: 100,
     componentType: "slider",
     step: 1,
-    default: 100,
+    default: 0,
   },
   {
     type: "yTo",
@@ -45,7 +45,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     max: 360,
     componentType: "slider",
     step: 1,
-    default: 0,
+    default: 180,
   },
   {
     type: "rotateXFrom",
