@@ -18,7 +18,7 @@ export default function PageContainer({
     <Container
       onMouseEnter={mouseEnterEvent}
       onMouseLeave={mouseLeaveEvent}
-      onClick={() => router.push(navigateTo)}
+      onClick={() => router.push(`/${navigateTo}`)}
     >
       {children}
     </Container>
