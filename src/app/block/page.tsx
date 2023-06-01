@@ -7,6 +7,7 @@ import { useDebounce } from "@toss/react";
 import { gsapOptions } from "./gsapOptions";
 import GsapSelect from "@components/GsapSelect";
 import GsapSlider from "@components/GsapSlider";
+import PlaygroundContainer from "@/components/PlaygroundContainer";
 import IPhoneX from "@components/IPhoneX";
 import useTransitionToCode from "@hooks/useTransitionToCode";
 import InsideIPhone from "@components/InsideIPhone";
@@ -65,7 +66,7 @@ export default function Block() {
   }, [counter, gsapStates, handleGsapAnimation]);
 
   return (
-    <Container>
+    <PlaygroundContainer>
       <OptionsContainer>
         <Button onClick={() => setCounter(counter + 1)}>replay</Button>
         {gsapOptions.map((item) => {
@@ -119,16 +120,9 @@ export default function Block() {
           />
         </InsideIPhone>
       </IPhoneX>
-    </Container>
+    </PlaygroundContainer>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 800px;
-`;
 
 const OptionsContainer = styled.div`
   display: flex;

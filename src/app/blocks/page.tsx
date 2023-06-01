@@ -11,6 +11,7 @@ import IPhoneX from "@components/IPhoneX";
 import useTransitionToCode from "@hooks/useTransitionToCode";
 import InsideIPhone from "@components/InsideIPhone";
 import { getGsapData } from "@utils/getGsapData";
+import PlaygroundContainer from "@/components/PlaygroundContainer";
 
 export default function Block() {
   const [counter, setCounter] = useState(0);
@@ -67,7 +68,7 @@ export default function Block() {
   }, [counter, gsapStates, handleGsapAnimation]);
 
   return (
-    <Container>
+    <PlaygroundContainer>
       <OptionsContainer>
         <Button onClick={() => setCounter(counter + 1)}>replay</Button>
         {gsapOptions.map((item) => {
@@ -155,16 +156,9 @@ export default function Block() {
           />
         </InsideIPhone>
       </IPhoneX>
-    </Container>
+    </PlaygroundContainer>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 800px;
-`;
 
 const OptionsContainer = styled.div`
   display: flex;

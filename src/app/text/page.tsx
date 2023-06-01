@@ -13,6 +13,7 @@ import { TextType } from "@/types/gsapOption";
 import useTransitionToCode from "@hooks/useTransitionToCode";
 import { getGsapData } from "@utils/getGsapData";
 import InsideIPhone from "@components/InsideIPhone";
+import PlaygroundContainer from "@/components/PlaygroundContainer";
 
 export default function Text() {
   const textRef = useRef<HTMLElement[] | null>(null);
@@ -74,7 +75,7 @@ export default function Text() {
   }, [counter, gsapStates, handleGsapAnimation]);
 
   return (
-    <Container>
+    <PlaygroundContainer>
       <OptionsContainer>
         <Button onClick={() => setCounter(counter + 1)}>replay</Button>
         {gsapOptions.map((item) => {
@@ -120,16 +121,9 @@ export default function Text() {
           </>
         </InsideIPhone>
       </IPhoneX>
-    </Container>
+    </PlaygroundContainer>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 800px;
-`;
 
 const OptionsContainer = styled.div`
   display: flex;
