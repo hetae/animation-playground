@@ -5,8 +5,7 @@ import styled from "@emotion/styled";
 import { Typography } from "@mui/joy";
 import { gsap } from "gsap";
 import SplitType from "split-type";
-import TextCard from "@/components/main-page/TextCard";
-import BlockCard from "@/components/main-page/BlockCard";
+import * as Cards from "@components/main-page";
 
 export default function Home() {
   const router = useRouter();
@@ -51,8 +50,9 @@ export default function Home() {
         Animation Playground<>🏉</>
       </Typography>
       <PageCardContainer>
-        <TextCard />
-        <BlockCard />
+        <Cards.TextCard />
+        <Cards.BlockCard />
+        <Cards.BlocksCard />
       </PageCardContainer>
     </>
   );

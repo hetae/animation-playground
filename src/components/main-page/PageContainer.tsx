@@ -1,16 +1,25 @@
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 
 export default function PageContainer({
   mouseEnterEvent,
   mouseLeaveEvent,
+  navigateTo,
   children,
 }: {
   mouseEnterEvent: () => void;
   mouseLeaveEvent: () => void;
+  navigateTo: string;
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
   return (
-    <Container onMouseEnter={mouseEnterEvent} onMouseLeave={mouseLeaveEvent}>
+    <Container
+      onMouseEnter={mouseEnterEvent}
+      onMouseLeave={mouseLeaveEvent}
+      onClick={() => router.push(navigateTo)}
+    >
       {children}
     </Container>
   );

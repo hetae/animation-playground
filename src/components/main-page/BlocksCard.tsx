@@ -1,18 +1,17 @@
 import styled from "@emotion/styled";
-import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
-import SplitType from "split-type";
+import { gsap } from "gsap";
 import PageContainer from "./PageContainer";
 
 const gsapOptions = [
   {
-    divide: "words",
     from: {
-      y: -100,
+      x: 100,
       opacity: 0,
     },
     to: {
-      y: 0,
+      rotate: 0,
+      x: 0,
       opacity: 1,
       stagger: 0.1,
       duration: 0.5,
@@ -20,35 +19,33 @@ const gsapOptions = [
     },
   },
   {
-    divide: "chars",
     from: {
-      x: 100,
+      y: -200,
       opacity: 0,
     },
     to: {
-      x: 0,
+      y: 0,
       opacity: 1,
-      stagger: 0.03,
-      duration: 0.5,
+      stagger: 0.1,
+      duration: 1,
       ease: "power4",
     },
   },
 ] as const;
 
-export default function TextCard() {
+export default function BlocksCard() {
   const [isHover, setIsHover] = useState(false);
   const counterRef = useRef(0);
-  const textRef = useRef<HTMLDivElement>(null);
+  const blockRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!textRef.current || !isHover) return;
-    const text = new SplitType(textRef.current);
+    const animationChildren = blockRef.current?.children;
+    if (!isHover || !animationChildren) return;
     const animation = gsapOptions[counterRef.current % gsapOptions.length];
-    const animationText = text[animation.divide];
     counterRef.current += 1;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(animationText, animation.from, animation.to);
+      gsap.fromTo(animationChildren, animation.from, animation.to);
     });
     return () => {
       ctx.revert();
@@ -59,10 +56,14 @@ export default function TextCard() {
     <PageContainer
       mouseEnterEvent={() => setIsHover(true)}
       mouseLeaveEvent={() => setIsHover(false)}
-      navigateTo="text"
+      navigateTo="blocks"
     >
       <Flex>
-        <TextContainer ref={textRef}>Text Playground</TextContainer>
+        <BlocksContainer ref={blockRef}>
+          <SingleBlock>Blocks</SingleBlock>
+          <SingleBlock />
+          <SingleBlock>Playground</SingleBlock>
+        </BlocksContainer>
       </Flex>
     </PageContainer>
   );
@@ -76,7 +77,21 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-const TextContainer = styled.div`
-  font-weight: 900;
-  font-size: 3rem;
+const SingleBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  background-color: #c9c4f9;
+  padding: 0.5rem;
+  border-radius: 10px;
+`;
+
+const BlocksContainer = styled.div`
+  font-weight: 700;
+  font-size: 2rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;

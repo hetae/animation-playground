@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
-import SplitType from "split-type";
+import { gsap } from "gsap";
 import PageContainer from "./PageContainer";
 
 const gsapOptions = [
@@ -43,18 +42,23 @@ export default function BlockCard() {
   const blockRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!blockRef.current) return;
-    if (isHover && blockRef.current) {
-      const animation = gsapOptions[counterRef.current % gsapOptions.length];
-      counterRef.current += 1;
+    if (!blockRef.current || !isHover) return;
+    const animation = gsapOptions[counterRef.current % gsapOptions.length];
+    counterRef.current += 1;
+
+    const ctx = gsap.context(() => {
       gsap.fromTo(blockRef.current, animation.from, animation.to);
-    }
+    });
+    return () => {
+      ctx.revert();
+    };
   }, [isHover]);
 
   return (
     <PageContainer
       mouseEnterEvent={() => setIsHover(true)}
       mouseLeaveEvent={() => setIsHover(false)}
+      navigateTo="block"
     >
       <Flex>
         <BlockContainer ref={blockRef}>
