@@ -14,12 +14,16 @@ function InsideIPhone({
   animationRef,
   codeRef,
   children,
+  styleOverride,
+  isBlock,
 }: {
   setIsCode: (isCode: boolean) => void;
   gsapStates: { [key: string]: number };
   animationRef: React.RefObject<HTMLDivElement>;
   codeRef: React.RefObject<HTMLDivElement>;
   children: ReactNode;
+  styleOverride?: React.CSSProperties;
+  isBlock?: boolean;
 }) {
   const codeString = `gsap.fromTo(animationRef.current,
   {
@@ -37,7 +41,7 @@ ${convertObjectToString(getGsapData(gsapStates).rest, 2)}
   };
 
   return (
-    <>
+    <div>
       <Toaster position="top-left" />
       <IPhoneTextDiv className="gsap--code" isCode ref={codeRef}>
         <SyntaxHighlighter language="typescript" wrapLongLines>
@@ -47,14 +51,19 @@ ${convertObjectToString(getGsapData(gsapStates).rest, 2)}
           <ContentCopyIcon onClick={copyCode} />
         </CopyIconContainer>
       </IPhoneTextDiv>
-      <IPhoneTextDiv className="gsap--animation" ref={animationRef}>
+      <IPhoneTextDiv
+        className="gsap--animation"
+        ref={animationRef}
+        style={styleOverride}
+        isBlock={isBlock}
+      >
         {children}
       </IPhoneTextDiv>
       <IphoneButtons>
         <Button onClick={() => setIsCode(false)}>Screen</Button>
         <Button onClick={() => setIsCode(true)}>Code</Button>
       </IphoneButtons>
-    </>
+    </div>
   );
 }
 export default forwardRef(InsideIPhone);
@@ -79,10 +88,10 @@ const CopyIconContainer = styled.div`
   }
 `;
 
-const IPhoneTextDiv = styled.div<{ isCode?: boolean }>`
+const IPhoneTextDiv = styled.div<{ isCode?: boolean; isBlock?: boolean }>`
   position: absolute;
   font-size: ${(props) => (props.isCode ? "16px" : "24px")};
-  padding: 48px 12px 0 12px;
+  padding: ${(props) => (props.isBlock ? "0" : "48px 12px 0 12px")};
   line-height: 1.4;
   opacity: 0;
 `;

@@ -100,9 +100,22 @@ export default function Block() {
           gsapStates={gsapStates}
           animationRef={animationRef}
           codeRef={iPhoneCodeRef}
+          styleOverride={{
+            width: "100%",
+            height: "80%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          isBlock
         >
           <div
-            style={{ width: "100px", height: "100px", backgroundColor: "cyan" }}
+            style={{
+              width: "100px",
+              height: "100px",
+              backgroundColor: "cyan",
+              borderRadius: "1rem",
+            }}
           />
         </InsideIPhone>
       </IPhoneX>
