@@ -53,6 +53,7 @@ export default function Home() {
         <Cards.TextCard />
         <Cards.BlockCard />
         <Cards.BlocksCard />
+        <Cards.PresetCard />
       </PageCardContainer>
     </>
   );
