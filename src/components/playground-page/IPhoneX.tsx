@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "../styles/device.min.css";
+import "../../styles/device.min.css";
 
 export default function IPhoneX({ children }: { children: ReactNode }) {
   return (
