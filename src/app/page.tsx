@@ -6,6 +6,7 @@ import { Typography } from "@mui/joy";
 import { gsap } from "gsap";
 import SplitType from "split-type";
 import TextCard from "@/components/main-page/TextCard";
+import BlockCard from "@/components/main-page/BlockCard";
 
 export default function Home() {
   const router = useRouter();
@@ -51,6 +52,7 @@ export default function Home() {
       </Typography>
       <PageCardContainer>
         <TextCard />
+        <BlockCard />
       </PageCardContainer>
     </>
   );
