@@ -1,9 +1,11 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Stack, Typography, styled, Sheet, Box } from "@mui/joy";
+import styled from "@emotion/styled";
+import { Typography } from "@mui/joy";
 import { gsap } from "gsap";
 import SplitType from "split-type";
+import TextCard from "@/components/main-page/TextCard";
 
 export default function Home() {
   const router = useRouter();
@@ -47,41 +49,18 @@ export default function Home() {
       <Typography level="h1" color="primary" variant="soft">
         Animation Playground<>🏉</>
       </Typography>
-      <Box sx={{ width: "100%", marginTop: "1rem" }}>
-        <Stack spacing={2} sx={{ width: "100%" }}>
-          <Item onClick={() => router.push("/text")}>
-            <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
-              Text
-            </Typography>
-          </Item>
-          <Item onClick={() => router.push("/block")}>
-            <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
-              Block
-            </Typography>
-          </Item>
-          <Item onClick={() => router.push("/blocks")}>
-            <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
-              Blocks
-            </Typography>
-          </Item>
-          <Item>
-            <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
-              Presets
-            </Typography>
-          </Item>
-        </Stack>
-      </Box>
+      <PageCardContainer>
+        <TextCard />
+      </PageCardContainer>
     </>
   );
 }
 
-const Item = styled(Sheet)(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark" ? theme.palette.background.level1 : "#ebebeb",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  borderRadius: 4,
-  color: theme.vars.palette.text.secondary,
-  cursor: "pointer",
-}));
+const PageCardContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+`;
