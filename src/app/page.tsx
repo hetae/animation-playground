@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/joy";
@@ -8,13 +8,14 @@ import SplitType from "split-type";
 import * as Cards from "@components/main-page";
 
 export default function Home() {
-  const router = useRouter();
+  const pageCardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const text = new SplitType("h1");
     const words = text.words;
     const title = words?.slice(0, 2) || null;
     const rugby = words?.slice(2) || null;
+    if (!title || !rugby || !pageCardsRef.current) return;
 
     gsap.fromTo(
       title,
@@ -42,6 +43,19 @@ export default function Home() {
         duration: 2,
       }
     );
+
+    gsap.fromTo(
+      pageCardsRef.current.children,
+      {
+        y: 50,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.1,
+      }
+    );
   }, []);
 
   return (
@@ -49,7 +63,7 @@ export default function Home() {
       <Typography level="h1" color="primary" variant="soft">
         Animation Playground<>🏉</>
       </Typography>
-      <PageCardContainer>
+      <PageCardContainer ref={pageCardsRef}>
         <Cards.TextCard />
         <Cards.BlockCard />
         <Cards.BlocksCard />
