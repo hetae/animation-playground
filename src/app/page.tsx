@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/joy";
 import { gsap } from "gsap";
