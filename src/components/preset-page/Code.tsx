@@ -12,14 +12,14 @@ export default function Code({ preset }: { preset: any }) {
   };
 
   const codeString = `gsap.fromTo(animationRef.current,
-    {
-  ${convertObjectToString(preset.from, 2)}
-    },
-    {
-  ${convertObjectToString(preset.to, 2)}
-  ${convertObjectToString(preset.rest, 2)}
-    }
-  );`;
+  {
+${convertObjectToString(preset.from, 2)}
+  },
+  {
+${convertObjectToString(preset.to, 2)}
+${convertObjectToString(preset.rest, 2)}
+  }
+);`;
 
   return (
     <Container>

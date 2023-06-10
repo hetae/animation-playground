@@ -3,6 +3,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import SplitType from "split-type";
 import { PresetType } from "@/app/preset/presets";
+import { media } from "@/styles/media";
 
 function MotionBlock({
   motion,
@@ -49,7 +50,7 @@ function MotionBlock({
       onClick={onClick}
       isClicked={isClicked}
     >
-      <Text ref={textRef}>Lorem Ipsum is simply dummy text</Text>
+      <Text ref={textRef}>{motion.description}</Text>
     </Container>
   );
 }
@@ -64,10 +65,20 @@ const Container = styled.div<{ isClicked: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  ${media.small} {
+    min-height: 150px;
+  }
 `;
 
 const Text = styled.div`
+  max-width: 15rem;
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
+
+  ${media.small} {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 `;
