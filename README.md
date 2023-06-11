@@ -1,6 +1,6 @@
 # animation-playground
 
-This is a [site](hetae.github.io/animation-playground/) for designers/developers to test various interactions by GUI and provide codes.
+This is a [site](https://hetae.github.io/animation-playground/) for designers/developers to test various interactions by GUI and provide codes.
 
 ## Getting Started
 
