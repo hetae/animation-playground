@@ -10,24 +10,7 @@ export interface PresetType {
 
 export const preset = [
   {
-    name: "text1",
-    type: "text",
-    description: "Entry text animation by characters",
-    textType: "chars",
-    from: {
-      scale: 0.5,
-      opacity: 0,
-    },
-    to: {
-      scale: 1,
-      opacity: 1,
-    },
-    rest: {
-      stagger: 0.03,
-    },
-  },
-  {
-    name: "text2",
+    name: "entry2",
     type: "text",
     description: "Entry text animation by lines",
     textType: "lines",
@@ -44,7 +27,7 @@ export const preset = [
     },
   },
   {
-    name: "text3",
+    name: "typing",
     type: "text",
     description: "Typing animation by characters",
     textType: "chars",
@@ -59,8 +42,28 @@ export const preset = [
       stagger: 0.06,
     },
   },
+
   {
-    name: "text3",
+    name: "random",
+    type: "text",
+    description: "Random text animation by characters",
+    textType: "chars",
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+      duration: 0.01,
+    },
+    rest: {
+      stagger: {
+        amount: 1,
+        from: "random",
+      },
+    },
+  },
+  {
+    name: "zoom",
     type: "text",
     description: "Text animation from zoom by words",
     textType: "words",
@@ -74,6 +77,23 @@ export const preset = [
     },
     rest: {
       stagger: 0.1,
+    },
+  },
+  {
+    name: "entry1",
+    type: "text",
+    description: "Entry text animation by characters",
+    textType: "chars",
+    from: {
+      scale: 0.5,
+      opacity: 0,
+    },
+    to: {
+      scale: 1,
+      opacity: 1,
+    },
+    rest: {
+      stagger: 0.03,
     },
   },
 ] as const;
