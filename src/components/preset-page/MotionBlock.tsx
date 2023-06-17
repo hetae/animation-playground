@@ -2,14 +2,16 @@ import styled from "@emotion/styled";
 import { memo, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import SplitType from "split-type";
-import { PresetType } from "@/app/preset/presets";
+import { PresetType } from "@/types/presetTypes";
 import { media } from "@/styles/media";
 
 function MotionBlock({
+  type,
   motion,
   onClick,
   isClicked,
 }: {
+  type: string;
   motion: PresetType;
   onClick: () => void;
   isClicked: boolean;
@@ -20,8 +22,8 @@ function MotionBlock({
   useEffect(() => {
     if (!isHover) return;
     const ctx = gsap.context(() => {
-      // if text
-      if (motion.type === "text" && textRef.current && motion.textType) {
+      if (type === "text" && textRef.current && motion.textType) {
+        // if text
         const texts = new SplitType(textRef.current)[motion.textType];
         gsap.fromTo(
           texts,
@@ -33,16 +35,38 @@ function MotionBlock({
             ...motion.rest,
           }
         );
+      } else if (type === "block") {
+        // if block
+        gsap.fromTo(
+          textRef.current,
+          {
+            ...motion.from,
+          },
+          {
+            ...motion.to,
+            ...motion.rest,
+          }
+        );
+      } else if (type === "blocks") {
+        // if blocks
+        gsap.fromTo(
+          textRef.current,
+          {
+            ...motion.from,
+          },
+          {
+            ...motion.to,
+            ...motion.rest,
+          }
+        );
       }
-      // if block
-
-      // if blocks
     });
 
     return () => {
       ctx.revert();
     };
-  }, [isHover, motion]);
+  }, [isHover, motion, type]);
+
   return (
     <Container
       onMouseEnter={() => setIsHover(true)}

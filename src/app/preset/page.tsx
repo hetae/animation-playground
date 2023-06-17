@@ -1,20 +1,32 @@
 "use client";
 import "@/styles/normalize.css";
-import { useCallback, useState } from "react";
+import { MouseEvent, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import { Toaster } from "react-hot-toast";
 import MotionBlock from "@/components/preset-page/MotionBlock";
 import Code from "@/components/preset-page/Code";
-import { preset } from "./presets";
+import * as Presets from "./presets";
 import { media } from "@/styles/media";
 import { Typography } from "@mui/joy";
+import TypeButtons from "@/components/preset-page/TypeButtons";
 
 export default function Preset() {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [presetType, setPresetType] = useState("text");
 
   const onClickMotion = useCallback((target: number) => {
     setSelectedIndex(target);
   }, []);
+
+  const onClickPresetType = useCallback(
+    (target: MouseEvent<HTMLButtonElement>) => {
+      setPresetType(target.currentTarget.value);
+      setSelectedIndex(0);
+    },
+    []
+  );
+
+  const preset = Presets[presetType as keyof typeof Presets];
 
   return (
     <>
@@ -22,8 +34,13 @@ export default function Preset() {
       <Container>
         <Motions>
           <Typography level="h2">PRESET MOTIONS</Typography>
-          {preset.map((motion, index) => (
+          <TypeButtons
+            onClickPresetType={onClickPresetType}
+            presetType={presetType}
+          />
+          {preset?.map((motion, index) => (
             <MotionBlock
+              type={presetType}
               key={index}
               motion={motion}
               onClick={() => onClickMotion(index)}
