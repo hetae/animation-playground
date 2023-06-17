@@ -7,7 +7,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     max: 100,
     componentType: "slider",
     step: 1,
-    default: 100,
+    default: -100,
   },
   {
     type: "xTo",
@@ -59,7 +59,7 @@ export const gsapOptions: gsapOptionsTypeObj[] = [
     type: "ease",
     componentType: "select",
     options: easingOptions,
-    default: "power0",
+    default: "power2",
   },
   {
     type: "stagger",

@@ -44,10 +44,12 @@ const ButtonsContainer = styled.div`
 
 const TypeButton = styled.button<{ isEnable: boolean }>`
   border: none;
+  width: 10rem;
   padding: 1rem;
   cursor: pointer;
-  background-color: ${({ isEnable }) => (isEnable ? "#dee2e6" : "#fff")};
+  border-radius: 0.5rem;
   font-size: 1.5rem;
+  background-color: ${({ isEnable }) => (isEnable ? "#dee2e6" : "#fff")};
   font-weight: ${({ isEnable }) => (isEnable ? "bold" : "normal")};
   transition: all 0.3s ease;
 

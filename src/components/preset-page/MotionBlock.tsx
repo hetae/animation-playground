@@ -17,10 +17,13 @@ function MotionBlock({
   isClicked: boolean;
 }) {
   const textRef = useRef<HTMLDivElement>(null);
+  const blockRef = useRef<HTMLDivElement>(null);
+  const blocksRef = useRef<HTMLDivElement>(null);
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
     if (!isHover) return;
+    // animation
     const ctx = gsap.context(() => {
       if (type === "text" && textRef.current && motion.textType) {
         // if text
@@ -35,10 +38,10 @@ function MotionBlock({
             ...motion.rest,
           }
         );
-      } else if (type === "block") {
+      } else if (type === "block" && blockRef.current) {
         // if block
         gsap.fromTo(
-          textRef.current,
+          blockRef.current,
           {
             ...motion.from,
           },
@@ -47,10 +50,10 @@ function MotionBlock({
             ...motion.rest,
           }
         );
-      } else if (type === "blocks") {
+      } else if (type === "blocks" && blocksRef?.current?.children) {
         // if blocks
         gsap.fromTo(
-          textRef.current,
+          blocksRef.current.children,
           {
             ...motion.from,
           },
@@ -74,7 +77,16 @@ function MotionBlock({
       onClick={onClick}
       isClicked={isClicked}
     >
-      <Text ref={textRef}>{motion.description}</Text>
+      {type === "text" && <Text ref={textRef}>{motion.description}</Text>}
+      {type === "block" && <Block ref={blockRef} />}
+      {type === "blocks" && (
+        <Blocks ref={blocksRef}>
+          <TinyBlock />
+          <TinyBlock />
+          <TinyBlock />
+          <TinyBlock />
+        </Blocks>
+      )}
     </Container>
   );
 }
@@ -89,6 +101,7 @@ const Container = styled.div<{ isClicked: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  overflow: hidden;
 
   ${media.small} {
     min-height: 150px;
@@ -105,4 +118,21 @@ const Text = styled.div`
     font-size: 1.5rem;
     font-weight: 600;
   }
+`;
+
+const Block = styled.div`
+  width: 20rem;
+  height: 6rem;
+  background-color: gray;
+`;
+
+const Blocks = styled.div`
+  width: 90%;
+`;
+
+const TinyBlock = styled.div`
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
+  background-color: gray;
 `;

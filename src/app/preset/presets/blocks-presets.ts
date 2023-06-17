@@ -1,12 +1,12 @@
 export const blocksPreset = [
   {
-    name: "zoom",
+    name: "move from x",
     description: "a zoom entry block",
     from: {
-      scale: 0.5,
+      x: 0,
     },
     to: {
-      scale: 1,
+      x: 300,
     },
     rest: {
       stagger: 0.1,
