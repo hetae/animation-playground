@@ -9,4 +9,16 @@ export const blockPreset = [
       scale: 1,
     },
   },
+  {
+    name: "slide",
+    description: "slide from right with transparent",
+    from: {
+      x: 100,
+      opacity: 0,
+    },
+    to: {
+      x: 0,
+      opacity: 1,
+    },
+  },
 ] as const;

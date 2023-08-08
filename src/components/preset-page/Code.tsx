@@ -16,8 +16,11 @@ export default function Code({ preset }: { preset: any }) {
 ${convertObjectToString(preset.from, 2)}
   },
   {
-${convertObjectToString(preset.to, 2)}
-${convertObjectToString(preset.rest, 2)}
+${convertObjectToString(preset.to, 2)}${
+    convertObjectToString(preset.rest, 2).length > 0
+      ? `\n${convertObjectToString(preset.rest, 2)}`
+      : ""
+  }
   }
 );`;
 
