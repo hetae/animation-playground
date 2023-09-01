@@ -14,7 +14,7 @@ export default function GsapSlider({
 }) {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <Typography level="body1" width={120} textAlign={"center"}>
+      <Typography level="body-md" width={120} textAlign={"center"}>
         {type}
       </Typography>
       <Slider

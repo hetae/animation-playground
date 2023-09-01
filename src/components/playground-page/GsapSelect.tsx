@@ -12,7 +12,7 @@ export default function GsapSelect({
 }) {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <Typography level="body1" width={120} textAlign={"center"}>
+      <Typography level="body-md" width={120} textAlign={"center"}>
         {item.type}
       </Typography>
       <Select
