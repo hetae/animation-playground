@@ -5,4 +5,7 @@ export interface PresetType {
   from?: any;
   to?: any;
   rest?: any;
+  width?: number;
+  height?: number;
+  count?: number;
 }

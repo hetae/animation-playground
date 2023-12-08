@@ -70,6 +70,38 @@ function MotionBlock({
     };
   }, [isHover, motion, type]);
 
+  const CustomBlock = () => {
+    if (type === "text") {
+      return <Text ref={textRef}>{motion.description}</Text>;
+    } else if (type === "block") {
+      if (motion.width && motion.height) {
+        return (
+          <Block
+            ref={blockRef}
+            style={{
+              width: motion.width,
+              height: motion.height,
+            }}
+          />
+        );
+      }
+      return <Block ref={blockRef} />;
+    } else if (type === "blocks") {
+      if (motion.width && motion.height) {
+        return (
+          <TinyBlock
+            style={{
+              width: motion.width,
+              height: motion.height,
+            }}
+          />
+        );
+      }
+      return <TinyBlock />;
+    }
+    return <></>;
+  };
+
   return (
     <Container
       onMouseEnter={() => setIsHover(true)}
@@ -77,14 +109,19 @@ function MotionBlock({
       onClick={onClick}
       isClicked={isClicked}
     >
-      {type === "text" && <Text ref={textRef}>{motion.description}</Text>}
-      {type === "block" && <Block ref={blockRef} />}
+      {(type === "text" || type === "block") && <CustomBlock />}
       {type === "blocks" && (
         <Blocks ref={blocksRef}>
-          <TinyBlock />
-          <TinyBlock />
-          <TinyBlock />
-          <TinyBlock />
+          {motion.count !== undefined ? (
+            [...Array(motion.count)].map((_, i) => <CustomBlock key={i} />)
+          ) : (
+            <>
+              <CustomBlock />
+              <CustomBlock />
+              <CustomBlock />
+              <CustomBlock />
+            </>
+          )}
         </Blocks>
       )}
     </Container>

@@ -21,4 +21,17 @@ export const blockPreset = [
       opacity: 1,
     },
   },
+  {
+    name: "bounce",
+    description: "bounce like button",
+    from: {
+      scale: 0.8,
+    },
+    to: {
+      scale: 1,
+    },
+    rest: {
+      ease: "bounce",
+    },
+  },
 ] as const;
