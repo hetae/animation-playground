@@ -1,6 +1,8 @@
 import { easingOptions, gsapOptionsTypeObj } from "../../types/gsapOption";
 
 export const gsapOptions: gsapOptionsTypeObj[] = [
+  // example url
+  // https://codepen.io/GreenSock/pen/AWQprN
   {
     type: "xFrom",
     min: -100,

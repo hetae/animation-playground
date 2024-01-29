@@ -71,7 +71,8 @@ export default function Block() {
 
   return (
     <PlaygroundContainer>
-      <OptionsContainer>
+      Still in Progress
+      {/* <OptionsContainer>
         <Button onClick={() => setCounter(counter + 1)}>replay</Button>
         {gsapOptions.map((item) => {
           if (item.componentType === "select") {
@@ -98,7 +99,7 @@ export default function Block() {
               />
             );
         })}
-      </OptionsContainer>
+      </OptionsContainer> */}
       <IPhoneX>
         <InsideIPhone
           setIsCode={setIsCode}
@@ -119,39 +120,7 @@ export default function Block() {
           <div
             style={{
               width: "250px",
-              height: "70px",
-              backgroundColor: "#a9d3f3",
-              borderRadius: "1rem",
-            }}
-          />
-          <div
-            style={{
-              width: "250px",
-              height: "70px",
-              backgroundColor: "#a9d3f3",
-              borderRadius: "1rem",
-            }}
-          />
-          <div
-            style={{
-              width: "250px",
-              height: "70px",
-              backgroundColor: "#a9d3f3",
-              borderRadius: "1rem",
-            }}
-          />
-          <div
-            style={{
-              width: "250px",
-              height: "70px",
-              backgroundColor: "#a9d3f3",
-              borderRadius: "1rem",
-            }}
-          />
-          <div
-            style={{
-              width: "250px",
-              height: "70px",
+              height: "250px",
               backgroundColor: "#a9d3f3",
               borderRadius: "1rem",
             }}
