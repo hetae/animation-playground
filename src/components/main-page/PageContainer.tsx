@@ -25,11 +25,12 @@ export default function PageContainer({
   );
 }
 
-const Container = styled.div`
+const Container = styled.button`
   position: relative;
   width: 20rem;
   height: 15rem;
   background-color: #f5f5f5;
+  border: none;
   border-radius: 1rem;
   overflow: hidden;
   cursor: pointer;
