@@ -14,7 +14,7 @@ export default function ThreeDimension() {
       isMountRef.current = true;
       gsap.set(cube2Ref.current, {
         rotateY: "-90deg",
-        x: "100px",
+        x: "80px",
         opacity: 1,
       });
       gsap.set(cube1Ref.current, { opacity: 1 });
@@ -24,14 +24,14 @@ export default function ThreeDimension() {
     if (isHover) {
       gsap.to(cube1Ref.current, {
         rotateY: "90deg",
-        x: "-100px",
+        x: "-80px",
         duration: 0.5,
       });
       gsap.fromTo(
         cube2Ref.current,
         {
           rotateY: "-90deg",
-          x: "100px",
+          x: "80px",
           duration: 0,
         },
         {
@@ -43,14 +43,14 @@ export default function ThreeDimension() {
     } else {
       gsap.to(cube2Ref.current, {
         rotateY: "-90deg",
-        x: "100px",
+        x: "80px",
         duration: 0.5,
       });
       gsap.fromTo(
         cube1Ref.current,
         {
           rotateY: "90deg",
-          x: "-100px",
+          x: "-80px",
           duration: 0,
         },
         {
@@ -69,8 +69,12 @@ export default function ThreeDimension() {
       navigateTo="3d"
     >
       <Container>
-        <Cube1 className="cube-1" ref={cube1Ref} />
-        <Cube2 className="cube-2" ref={cube2Ref} />
+        <Cube1 className="cube-1" ref={cube1Ref}>
+          3D
+        </Cube1>
+        <Cube2 className="cube-2" ref={cube2Ref}>
+          Motion
+        </Cube2>
       </Container>
     </PageContainer>
   );
@@ -88,12 +92,22 @@ const Cube1 = styled.div`
   position: absolute;
   width: 10rem;
   height: 10rem;
-  background-color: #cccccc;
+  background-color: #fc9bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
 `;
 
 const Cube2 = styled.div<{ isHover?: boolean }>`
   position: absolute;
   width: 10rem;
   height: 10rem;
-  background-color: #777777;
+  background-color: #96d8ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
 `;
